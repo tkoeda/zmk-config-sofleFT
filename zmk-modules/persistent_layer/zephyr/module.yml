@@ -1,3 +1,0 @@
-name: zmk-persistent-layer
-build:
-  cmake: .

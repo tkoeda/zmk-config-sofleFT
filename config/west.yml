@@ -4,9 +4,14 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: rafaelromao
+      url-base: https://github.com/rafaelromao
   projects:
     - name: zmk
       remote: zmkfirmware
       import: app/west.yml
+    - name: zmk-persistent-layers
+      remote: rafaelromao
+      revision: d76fc22c07aaa4940079fece1fe0b4418f042e55
   self:
     path: config

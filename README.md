@@ -199,3 +199,33 @@ GitHub Actions builds 5 firmware files:
 
 FalbaTech  
 https://falbatech.click
+
+
+## Persistent Mac / Windows mode
+
+The current custom keymap uses Windows base layer 0 and Mac base layer 2.
+The existing outer thumb OS-switch keys select Mac (`&to 2`) from Windows
+and Windows (`&to 0`) from Mac.
+
+The [zmk-persistent-layers module](https://github.com/rafaelromao/zmk-persistent-layers)
+remembers whether Mac mode is enabled separately for each Bluetooth profile and
+for USB, including across deep sleep and power-off. The dependency is pinned in
+`config/west.yml`. It replaces the previous sleep-only saver.
+
+After flashing:
+
+1. Connect to the desired computer using its Bluetooth profile.
+2. Use an existing OS-switch key to select the correct mode.
+3. Wait at least two seconds before turning off the keyboard.
+4. Repeat once for each profile. Switching profiles then restores its saved mode.
+
+Only Mac base layer 2 is persisted. Navigation, symbols, system, numbers, and
+QWERTY are temporary; their active state is not saved. The SYSTEM layer's
+QWERTY key now toggles its overlay (`&tog 7`) so entering QWERTY does not clear
+the remembered Mac mode. Toggle it again to leave QWERTY, or use an OS-switch key.
+
+Set the mode while the intended endpoint is connected. USB has one shared saved
+mode and cannot distinguish different computers. If USB is the selected output,
+changing the OS mode updates the USB setting rather than a Bluetooth profile.
+Flashing `settings_reset` clears the remembered modes and Bluetooth pairings;
+normal firmware updates do not require a settings reset.
